@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+    font-family: CriqueGrotesk-Regular;
+    src: url("../public/fonts/CriqueGrotesk.otf") format("opentype");
+}
+@font-face {
+    font-family: CriqueGrotesk-light;
+    src: url("../public/fonts/CriqueGroteskDisplay-Light.otf") format("opentype");
+}
+@font-face {
+    font-family: CriqueGrotesk-bold;
+    src: url("../public/fonts/CriqueGrotesk-Black.otf") format("opentype");
+}
+@font-face {
+    font-family: CriqueGrotesk-italic;
+    src: url("../public/fonts/CriqueGroteskDisplay-Italic.otf") format("opentype");
+}
+@font-face {
+    font-family: CriqueGrotesk-mediumItalic;
+    src: url("../public/fonts/CriqueGrotesk-MediumItalic.otf") format("opentype");
+}
+@font-face {
+    font-family: CriqueGrotesk-med;
+    src: url("../public/fonts/CriqueGroteskDisplay-Medium.otf") format("opentype");
+}
+@font-face {
+    font-family: CriqueGrotesk-Regular;
+    src: url("../public/fonts/CriqueGrotesk.otf") format("opentype");
+}
