@@ -14,7 +14,7 @@ const compressImage = (canvas, callback) => {
   canvas.toBlob(callback, "image/jpeg", 0.8);
 };
 
-const Main = () => {
+const MainPage = () => {
   const { user, error, isLoading } = useUser();
   const [ModelType, setModelType] = useState("");
   const [files, setFiles] = useState(null);
@@ -213,4 +213,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default MainPage;

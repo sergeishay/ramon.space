@@ -3,7 +3,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { useRouter } from 'next/router';
 import Link from 'next/link'
 
-const Index = () => {
+const App = () => {
   const { user, error, isLoading } = useUser();
   const router = useRouter();
 
@@ -26,4 +26,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default App;
