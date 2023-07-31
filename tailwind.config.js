@@ -9,6 +9,8 @@ module.exports = {
     extend: {
       backgroundImage: {
         'main-background': "url('../public/app_background2.webp')",
+        'header-img': "url('../public/header.jpg')",
+        'footer-img': "url('../public/footer.jpg')",
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',

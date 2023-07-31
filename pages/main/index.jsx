@@ -202,7 +202,7 @@ const MainPage = () => {
             <div className="flex justify-center items-center flex-col" >
               <h3>Image Preview:</h3>
               <button onClick={removeImage}>X</button>
-              <Image src={urlFile} alt="Preview" width="300" />
+              <Image src={urlFile} height={400} width={400} alt="Preview" />
             </div>
           )}
           <button id="upload-button">Upload Image</button>
