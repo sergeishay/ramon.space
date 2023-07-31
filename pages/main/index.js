@@ -31,14 +31,14 @@ const Main = () => {
     }
   }, [user, router]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
-
   useEffect(() => {
     if (videoStream && videoRef.current) {
       videoRef.current.srcObject = videoStream;
     }
   }, [videoStream]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
 
   // imageHandler function
   const handleInputFile = async (e) => {
