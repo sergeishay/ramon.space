@@ -83,7 +83,8 @@ const Main = () => {
   const stopCamera = () => {
     const tracks = videoRef.current.srcObject.getTracks();
     tracks.forEach((track) => track.stop());
-    setIsCameraOn(false);
+    setIsCameraOn(()=>false);
+    setVideoStream(()=>null);
   };
 
   // handleImageInputChange function
@@ -133,20 +134,7 @@ const Main = () => {
       reader.readAsDataURL(file);
     }
   }
-  const [imageObject, setImageObject] = useState(null);
 
-  const handleFileInput = useRef(null);
-
-  const handleClick = () => {
-    handleFileInput.current.click();
-  };
-
-  const handleImageChange = (event) => {
-    setImageObject({
-      imagePreview: URL.createObjectURL(event.target.files[0]),
-      imageFile: event.target.files[0],
-    });
-  };
   function displayUploadMessage(message) {
     console.log(message);
   }
@@ -167,27 +155,28 @@ const Main = () => {
     setUrlFile("");
   };
   return (
-    <div className="flex flex-col justify-between items-center h-[80vh] w-full text-whites">
-      <p className="text-white font-italic text-2xl pt-5">
-        {" "}
-        AI at terrestial speeds
-      </p>
-      <p className="text-white font-primary text-2xl pt-5"> {user?.name}</p>
-      <p className="text-white font-tertiary text-4xl pt-1">
-        {" "}
-        Choose AI Model:
-      </p>
+    <div className="flex flex-col justify-between align-center h-[80vh] w-full text-whites text-center">
+      <div className="headings flex flex-col justify-center align-center text-center">
+        <p className="text-white font-italic text-2xl pt-5">
+          {" "}
+          AI at terrestial speeds
+        </p>
+        <p className="text-white font-primary text-2xl pt-5"> {user?.name}</p>
+        <p className="text-white font-tertiary text-4xl pt-1">
+          {" "}
+          Choose AI Model:
+        </p>
+      </div>
 
       <div className="container">
         <form onSubmit={handleFormSubmit}>
-          {/* Camera controls
           {!isCameraOn && (
             <button type="button" onClick={startCamera}>
               Open Camera
             </button>
           )}
           {videoStream && (
-            <>
+            <div className="flex justify-center items-center ">
               <video
                 ref={(element) => {
                   videoRef.current = element;
@@ -195,47 +184,29 @@ const Main = () => {
                 width="600"
                 height="400"
                 autoPlay
-                style={{ backgroundColor: "grey", border: "2px solid red" }}
+                className="video-class"
               ></video>
 
-              <button type="button" onClick={captureImage}>
+              <button className="captureTheImage" type="button" onClick={captureImage}>
                 Capture Image
               </button>
-              <button type="button" onClick={stopCamera}>
+              <button type="button" className="stopTheImage" onClick={stopCamera}>
                 Close Camera
               </button>
-            </>
-          )} */}
-          <div>
-            <button onClick={handleClick}>Upload Photo</button>
-            <label>
-              <input
-                style={{ display: "none" }}
-                type="file"
-                accept="image/*"
-                capture="environment"
-                ref={handleFileInput}
-                onChange={handleImageChange}
-              />
-            </label>
-            {imageObject && <img src={imageObject.imagePreview} />}
-          </div>
+            </div>
+          )}
           {/* Image Preview */}
-          {/* {urlFile && (
-            <div>
+          {urlFile && (
+            <div className="flex justify-center items-center flex-col" >
               <h3>Image Preview:</h3>
               <button onClick={removeImage}>X</button>
               <img src={urlFile} alt="Preview" width="300" />
             </div>
-          )} */}
-
+          )}
           <button id="upload-button">Upload Image</button>
-
-
-
         </form>
-        <a href="/api/auth/logout">Logout</a>
       </div>
+        <a href="/api/auth/logout">Logout</a>
     </div>
   );
 };

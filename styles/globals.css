@@ -31,3 +31,24 @@
     font-family: CriqueGrotesk-Regular;
     src: url("../public/fonts/CriqueGrotesk.otf") format("opentype");
 }
+
+.video-class{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+}
+
+.stopTheImage{
+    z-index: 999;
+    position: absolute;
+    right: 80%;
+}
+.captureTheImage{
+    z-index: 999;
+    position: absolute;
+    left: 80%;
+}
