@@ -1,6 +1,8 @@
+'use client'
 import React, { useEffect, useState, useRef } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
+import Link from 'next/link'
 import AWS from "aws-sdk";
 AWS.config.region = "eu-central-1";
 AWS.config.credentials = new AWS.Credentials(
@@ -206,7 +208,7 @@ const Main = () => {
           <button id="upload-button">Upload Image</button>
         </form>
       </div>
-        <a href="/api/auth/logout">Logout</a>
+        <Link href="/api/auth/logout">Logout</Link>
     </div>
   );
 };

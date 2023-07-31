@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useRouter } from 'next/router';
 
-const index = () => {
+const Index = () => {
   const { user, error, isLoading } = useUser();
   const router = useRouter();
 
@@ -25,4 +25,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
