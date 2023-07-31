@@ -1,4 +1,4 @@
-'use client'
+import Image from 'next/image'
 import React, { useEffect, useState, useRef } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
@@ -202,7 +202,7 @@ const Main = () => {
             <div className="flex justify-center items-center flex-col" >
               <h3>Image Preview:</h3>
               <button onClick={removeImage}>X</button>
-              <img src={urlFile} alt="Preview" width="300" />
+              <Image src={urlFile} alt="Preview" width="300" />
             </div>
           )}
           <button id="upload-button">Upload Image</button>
