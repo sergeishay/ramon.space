@@ -221,10 +221,8 @@ const MainPage = () => {
                 <div className=''>
                   <button className='absolute right-0 mr-[5%] ' onClick={removeImage}><Image src={close} height={45} width={45} alt="close-icon" /></button>
                 </div>
-                <div className='max-h-14 h-9'>
 
-                <Image src={urlFile} height={300} width={400} sizes="(max-width: 458px) 20vh"  style={{ objectFit: "cover" }} className='px-6' alt="Preview" />
-                </div>
+                <Image src={urlFile} height={300} width={400} sizes="(max-width: 458px) 20vh"  style={{ objectFit: "contain" }} className='px-6' alt="Preview" />
                 <button className='bg-my-orange w-[80%] p-3 mt-6 text-2xl font-mid text-whites' id="upload-button">SEND</button>
               </div>
             ) :
