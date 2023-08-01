@@ -215,14 +215,16 @@ const MainPage = () => {
             {imageSrc ? (
               <div className="static flex justify-center items-center flex-col" >
                 <div className='flex flex-row justify-center items-center mb-7'>
-                  <Image src={ModelType === 'cloudDetection' ? cloudIcon : segIcon } className="mx-1" height={50} width={50} alt="segIcon" />
+                  <Image src={ModelType === 'cloudDetection' ? segIcon :cloudIcon } className="mx-1" height={50} width={50} alt="segIcon" />
                   <h3 className="text-white font-tertiary text-4xl mx-2 " >{ModelType}</h3>
                 </div>
                 <div className=''>
                   <button className='absolute right-0 mr-[5%] ' onClick={removeImage}><Image src={close} height={45} width={45} alt="close-icon" /></button>
                 </div>
+                <div className='max-h-28 h-28'>
 
                 <Image src={urlFile} height={300} width={400} sizes="(max-width: 458px) 20vh"  style={{ objectFit: "cover" }} className='px-6' alt="Preview" />
+                </div>
                 <button className='bg-my-orange w-[80%] p-3 mt-6 text-2xl font-mid text-whites' id="upload-button">SEND</button>
               </div>
             ) :
