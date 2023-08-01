@@ -93,7 +93,7 @@ const MainPage = () => {
           FunctionName: "uploadImages",
           InvocationType: "RequestResponse",
           Payload: JSON.stringify(payload),
-          Qualifier: "3",
+          Qualifier: "4",
         };
         try {
           const lambdaResponse = await lambda.invoke(lambdaParams).promise();
@@ -221,7 +221,8 @@ const MainPage = () => {
                 <div className=''>
                   <button className='absolute right-0 mr-[5%] ' onClick={removeImage}><Image src={close} height={45} width={45} alt="close-icon" /></button>
                 </div>
-                <Image src={urlFile} height={300} width={400}  style={{ objectFit: "cover" }} className='px-6' alt="Preview" />
+
+                <Image src={urlFile} height={300} width={400} sizes="(max-width: 458px) 20vh"  style={{ objectFit: "cover" }} className='px-6' alt="Preview" />
                 <button className='bg-my-orange w-[80%] p-3 mt-6 text-2xl font-mid text-whites' id="upload-button">SEND</button>
               </div>
             ) :
