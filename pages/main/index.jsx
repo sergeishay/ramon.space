@@ -126,7 +126,7 @@ const MainPage = () => {
       alert("Unable to detect orientation. Please make sure to hold your phone horizontally.");
       return false;
     }
-  
+
     if (window.screen.orientation.type.startsWith("landscape")) {
       return true;
     } else {
@@ -159,6 +159,26 @@ const MainPage = () => {
           {!files && (
             <div className="form-group flex flex-row justify-around items-start">
               <div className="segment">
+                {/* <input
+                  id="segmentation"
+                  className="input-to-hidden"
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  onChange={(event) => handleImageChange('Segmentation', event)}
+                  style={{ display: 'none' }}
+                /> */}
+                <label htmlFor="segmentation">
+                </label>
+                {/* <p className='text-mid text-whites'>Segmentation</p> */}
+                <button onClick={() => {
+                  if (checkOrientation()) {
+                    document.getElementById('segmentation').click();
+                  }
+                }}>
+                  <Image src={SegmentationImg} height={150} width={150} alt="Segmentation" />
+                  Segmentation
+                </button>
                 <input
                   id="segmentation"
                   className="input-to-hidden"
@@ -168,10 +188,6 @@ const MainPage = () => {
                   onChange={(event) => handleImageChange('Segmentation', event)}
                   style={{ display: 'none' }}
                 />
-                <label htmlFor="segmentation">
-                  <Image src={SegmentationImg} height={150} width={150} alt="Segmentation" />
-                </label>
-                <p className='text-mid text-whites'>Segmentation</p>
               </div>
               <div className="cloudDetection">
                 <input
@@ -198,9 +214,9 @@ const MainPage = () => {
                   <h3 className="text-white font-tertiary text-4xl mx-2 " >{ModelType}</h3>
                 </div>
                 <div className=''>
-                  <button className='absolute right-0 mr-[5%] ' onClick={removeImage}><Image src={close} height={45} width={45}  alt="close-icon" /></button>
+                  <button className='absolute right-0 mr-[5%] ' onClick={removeImage}><Image src={close} height={45} width={45} alt="close-icon" /></button>
                 </div>
-                <Image src={urlFile} height={300} width={400} style={{objectFit: "contain"}}  className='px-6' alt="Preview" />
+                <Image src={urlFile} height={300} width={400} style={{ objectFit: "contain" }} className='px-6' alt="Preview" />
                 <button className='bg-my-orange w-[80%] p-3 mt-6 text-2xl font-mid text-whites' id="upload-button">SEND</button>
               </div>
             ) :
