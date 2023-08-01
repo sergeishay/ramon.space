@@ -158,8 +158,8 @@ const MainPage = () => {
       {showPopup && (
         <div className="fixed top-0 left-0 w-screen h-screen z-50 flex justify-center items-center bg-black bg-opacity-50">
           <div className="bg-white p-8 rounded-md">
-            <h3>Please take a photo in horizontal position.</h3>
-            <button onClick={() => setShowPopup(false)}>OK</button>
+            <h3 className="text-black font-primary" >Please take a photo in horizontal position.</h3>
+            <button className='bg-my-orange w-[80%] p-2 mt-3 text-xl' onClick={() => setShowPopup(false)}>OK</button>
           </div>
         </div>
       )}
