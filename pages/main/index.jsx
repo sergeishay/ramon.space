@@ -24,7 +24,7 @@ const MainPage = () => {
   const [imageSrc, setImageSrc] = useState(null);
   const videoRef = useRef();
   const router = useRouter();
-  conts [theCameraIsOpen, setTheCameraIsOpen] = useState(false); 
+  const [theCameraIsOpen, setTheCameraIsOpen] = useState(false); 
   useEffect(() => {
     if (!user) {
       router.push("/");
