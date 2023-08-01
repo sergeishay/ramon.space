@@ -48,7 +48,7 @@ const MainPage = () => {
 
 
   const handleImageChange = (type, event) => {
-    if (!checkOrientation()) return;
+
 
     setModelType(type);
     const file = event.target.files[0];
@@ -171,7 +171,7 @@ const MainPage = () => {
               <div className="segment">
                 <button onClick={() => {
                   document.getElementById('segmentation').click();
-                  // if (checkOrientation()) {}
+
                 }}>
                   <Image src={SegmentationImg} height={150} width={150} alt="Segmentation" />
                   Segmentation
