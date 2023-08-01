@@ -135,19 +135,6 @@ const MainPage = () => {
 
   };
 
-  const checkOrientation = () => {
-    if (!window.screen.orientation || !window.screen.orientation.type) {
-      alert("Unable to detect orientation. Please make sure to hold your phone horizontally.");
-      return false;
-    }
-
-    if (window.screen.orientation.type.startsWith("landscape")) {
-      return true;
-    } else {
-      alert("Please rotate your phone to horizontal orientation.");
-      return false;
-    }
-  };
 
 
   console.log(ModelType);
