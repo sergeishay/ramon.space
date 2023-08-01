@@ -221,7 +221,7 @@ const MainPage = () => {
                 <div className=''>
                   <button className='absolute right-0 mr-[5%] ' onClick={removeImage}><Image src={close} height={45} width={45} alt="close-icon" /></button>
                 </div>
-                <div className='max-h-28 h-28'>
+                <div className='max-h-14 h-9'>
 
                 <Image src={urlFile} height={300} width={400} sizes="(max-width: 458px) 20vh"  style={{ objectFit: "cover" }} className='px-6' alt="Preview" />
                 </div>
