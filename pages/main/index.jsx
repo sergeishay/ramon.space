@@ -93,7 +93,7 @@ const MainPage = () => {
           FunctionName: "uploadImages",
           InvocationType: "RequestResponse",
           Payload: JSON.stringify(payload),
-          Qualifier: "2",
+          Qualifier: "3",
         };
         try {
           const lambdaResponse = await lambda.invoke(lambdaParams).promise();
@@ -196,7 +196,7 @@ const MainPage = () => {
                 <button onClick={() => {
                   document.getElementById('cloudDetection').click();
                 }}>
-                  <Image src={cloudIcon} height={150} width={150} alt="Cloud Detection" />
+                  <Image src={CloudImg} height={150} width={150} alt="Cloud Detection" />
                   Cloud Detection
                 </button>
                 <input
@@ -215,13 +215,13 @@ const MainPage = () => {
             {imageSrc ? (
               <div className="static flex justify-center items-center flex-col" >
                 <div className='flex flex-row justify-center items-center mb-7'>
-                  <Image src={segIcon} className="mx-1" height={50} width={50} alt="segIcon" />
+                  <Image src={ModelType === 'cloudDetection' ? cloudIcon : segIcon } className="mx-1" height={50} width={50} alt="segIcon" />
                   <h3 className="text-white font-tertiary text-4xl mx-2 " >{ModelType}</h3>
                 </div>
                 <div className=''>
                   <button className='absolute right-0 mr-[5%] ' onClick={removeImage}><Image src={close} height={45} width={45} alt="close-icon" /></button>
                 </div>
-                <Image src={urlFile} height={300} width={400} fill={true} style={{ objectFit: "contain" }} className='px-6' alt="Preview" />
+                <Image src={urlFile} height={300} width={400}  style={{ objectFit: "cover" }} className='px-6' alt="Preview" />
                 <button className='bg-my-orange w-[80%] p-3 mt-6 text-2xl font-mid text-whites' id="upload-button">SEND</button>
               </div>
             ) :
