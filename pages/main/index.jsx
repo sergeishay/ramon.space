@@ -21,34 +21,43 @@ const MainPage = () => {
   const [urlFile, setUrlFile] = useState("");
   const [isCameraOn, setIsCameraOn] = useState(false);
   const [videoStream, setVideoStream] = useState(null);
-
+  const [imageSrc, setImageSrc] = useState(null);
   const videoRef = useRef();
   const router = useRouter();
-
+  conts [theCameraIsOpen, setTheCameraIsOpen] = useState(false); 
   useEffect(() => {
     if (!user) {
       router.push("/");
     }
   }, [user, router]);
 
-  useEffect(() => {
-    if (videoStream && videoRef.current) {
-      videoRef.current.srcObject = videoStream;
-    }
-  }, [videoStream]);
+  // useEffect(() => {
+  //   if (videoStream && videoRef.current) {
+  //     videoRef.current.srcObject = videoStream;
+  //   }
+  // }, [videoStream]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
   // imageHandler function
-  const handleInputFile = async (e) => {
-    const file = e.target.files[0];
-    console.log(file);
-    const urlFormat = URL.createObjectURL(file);
-    setFiles(file);
-    setUrlFile(urlFormat);
+  // const handleInputFile = async (e) => {
+  //   const file = e.target.files[0];
+  //   console.log(file);
+  //   const urlFormat = URL.createObjectURL(file);
+  //   setFiles(file);
+  //   setUrlFile(urlFormat);
+  // };
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImageSrc(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
-
   // start Camera function
   const startCamera = async () => {
     try {
@@ -77,7 +86,7 @@ const MainPage = () => {
       const file = new File([blob], "capturedImage.jpg", {
         type: "image/jpeg",
       });
-      handleInputFile({ target: { files: [file] } });
+      handleImageChange({ target: { files: [file] } });
     });
 
     stopCamera();
@@ -85,8 +94,8 @@ const MainPage = () => {
   const stopCamera = () => {
     const tracks = videoRef.current.srcObject.getTracks();
     tracks.forEach((track) => track.stop());
-    setIsCameraOn(()=>false);
-    setVideoStream(()=>null);
+    setIsCameraOn(() => false);
+    setVideoStream(() => null);
   };
 
   // handleImageInputChange function
@@ -177,7 +186,7 @@ const MainPage = () => {
               Open Camera
             </button>
           )}
-          {videoStream && (
+          {/* {videoStream && (
             <div className="flex justify-center items-center ">
               <video
                 ref={(element) => {
@@ -196,19 +205,34 @@ const MainPage = () => {
                 Close Camera
               </button>
             </div>
-          )}
+          )} */}
+         <div >
+            <input
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handleImageChange}
+            />
+            <button className="captureTheImage" type="button" onClick={captureImage}>
+              Capture Image
+            </button>
+            <button type="button" className="stopTheImage" onClick={stopCamera}>
+              Close Camera
+            </button>
+            {imageSrc && <img src={imageSrc} alt="Captured" />}
+          </div>
           {/* Image Preview */}
-          {urlFile && (
+          {/* {urlFile && (
             <div className="flex justify-center items-center flex-col" >
               <h3>Image Preview:</h3>
               <button onClick={removeImage}>X</button>
               <Image src={urlFile} height={400} width={400} alt="Preview" />
             </div>
-          )}
+          )} */}
           <button id="upload-button">Upload Image</button>
         </form>
       </div>
-        <Link href="/api/auth/logout">Logout</Link>
+      <Link href="/api/auth/logout">Logout</Link>
     </div>
   );
 };
