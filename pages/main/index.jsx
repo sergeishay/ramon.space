@@ -22,12 +22,26 @@ const MainPage = () => {
   const [files, setFiles] = useState(null);
   const [urlFile, setUrlFile] = useState("");
   const [imageSrc, setImageSrc] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+
+
   const router = useRouter();
   useEffect(() => {
     if (!user) {
       router.push("/");
     }
   }, [user, router]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPopup(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+
+
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
@@ -141,6 +155,14 @@ const MainPage = () => {
 
   return (
     <div className="flex flex-col justify-between align-center h-[80vh] w-full text-whites text-center">
+      {showPopup && (
+        <div className="fixed top-0 left-0 w-screen h-screen z-50 flex justify-center items-center bg-black bg-opacity-50">
+          <div className="bg-white p-8 rounded-md">
+            <h3>Please take a photo in horizontal position.</h3>
+            <button onClick={() => setShowPopup(false)}>OK</button>
+          </div>
+        </div>
+      )}
       <div className="headings flex flex-col justify-center align-center text-center">
         <p className="text-white font-italic text-2xl pt-5">
           {" "}
@@ -158,23 +180,11 @@ const MainPage = () => {
         <form onSubmit={handleFormSubmit}>
           {!files && (
             <div className="form-group flex flex-row justify-around items-start">
+
               <div className="segment">
-                {/* <input
-                  id="segmentation"
-                  className="input-to-hidden"
-                  type="file"
-                  accept="image/*"
-                  capture="environment"
-                  onChange={(event) => handleImageChange('Segmentation', event)}
-                  style={{ display: 'none' }}
-                /> */}
-                <label htmlFor="segmentation">
-                </label>
-                {/* <p className='text-mid text-whites'>Segmentation</p> */}
                 <button onClick={() => {
-                  if (checkOrientation()) {
-                    document.getElementById('segmentation').click();
-                  }
+                  document.getElementById('segmentation').click();
+                  // if (checkOrientation()) {}
                 }}>
                   <Image src={SegmentationImg} height={150} width={150} alt="Segmentation" />
                   Segmentation
@@ -189,7 +199,15 @@ const MainPage = () => {
                   style={{ display: 'none' }}
                 />
               </div>
+
+
               <div className="cloudDetection">
+                <button onClick={() => {
+                  document.getElementById('cloudDetection').click();
+                }}>
+                  <Image src={CloudImg} height={150} width={150} alt="Cloud Detection" />
+                  Cloud Detection
+                </button>
                 <input
                   id="cloudDetection"
                   className="input-to-hidden"
@@ -199,10 +217,6 @@ const MainPage = () => {
                   onChange={(event) => handleImageChange('cloudDetection', event)}
                   style={{ display: 'none' }}
                 />
-                <label htmlFor="cloudDetection">
-                  <Image src={CloudImg} height={150} width={150} alt="Cloud Detection" />
-                </label>
-                <p>Cloud Detection</p>
               </div>
             </div>
           )}
