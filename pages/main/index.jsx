@@ -35,7 +35,7 @@ const MainPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowPopup(true);
-    }, 2000);
+    }, 800);
 
     return () => clearTimeout(timer);
   }, []);
@@ -83,7 +83,7 @@ const MainPage = () => {
       const reader = new FileReader();
       reader.onload = async (e) => {
         const lambda = new AWS.Lambda();
-        displayUploadMessage("Uploading image...");
+        displayUploadMessage("Sending image...");
         const payload = {
           name: user.name,
           image: { name: file.name, data: e.target.result },
@@ -98,6 +98,7 @@ const MainPage = () => {
         try {
           const lambdaResponse = await lambda.invoke(lambdaParams).promise();
           const responseBody = JSON.parse(lambdaResponse.Payload).body;
+          console.log(responseBody);
           displaySuccessMessage(responseBody);
         } catch (error) {
           console.error(error);
@@ -119,6 +120,9 @@ const MainPage = () => {
 
   function displaySuccessMessage(message) {
     toast.success(message);
+    setFiles(null);
+    setUrlFile("");
+    setImageSrc(null);
   }
   function displayErrorMessage(message) {
     toast.error(message);
@@ -192,7 +196,7 @@ const MainPage = () => {
                 <button onClick={() => {
                   document.getElementById('cloudDetection').click();
                 }}>
-                  <Image src={CloudImg} height={150} width={150} alt="Cloud Detection" />
+                  <Image src={cloudIcon} height={150} width={150} alt="Cloud Detection" />
                   Cloud Detection
                 </button>
                 <input
@@ -217,7 +221,7 @@ const MainPage = () => {
                 <div className=''>
                   <button className='absolute right-0 mr-[5%] ' onClick={removeImage}><Image src={close} height={45} width={45} alt="close-icon" /></button>
                 </div>
-                <Image src={urlFile} height={300} width={400} style={{ objectFit: "contain" }} className='px-6' alt="Preview" />
+                <Image src={urlFile} height={300} width={400} fill={true} style={{ objectFit: "contain" }} className='px-6' alt="Preview" />
                 <button className='bg-my-orange w-[80%] p-3 mt-6 text-2xl font-mid text-whites' id="upload-button">SEND</button>
               </div>
             ) :
