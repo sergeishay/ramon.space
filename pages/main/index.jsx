@@ -34,6 +34,8 @@ const MainPage = () => {
 
 
   const handleImageChange = (type, event) => {
+    if (!checkOrientation()) return;
+
     setModelType(type);
     const file = event.target.files[0];
     const urlFormat = URL.createObjectURL(file);
@@ -49,11 +51,8 @@ const MainPage = () => {
       reader.readAsDataURL(file);
     }
   };
+
   // handleImageInputChange function
-
-  //check if the image is uploaded function
-
-
 
   async function handleImageInputChange() {
     const file = files;
@@ -122,7 +121,19 @@ const MainPage = () => {
 
   };
 
-
+  const checkOrientation = () => {
+    if (!window.screen.orientation || !window.screen.orientation.type) {
+      alert("Unable to detect orientation. Please make sure to hold your phone horizontally.");
+      return false;
+    }
+  
+    if (window.screen.orientation.type.startsWith("landscape")) {
+      return true;
+    } else {
+      alert("Please rotate your phone to horizontal orientation.");
+      return false;
+    }
+  };
 
 
   console.log(ModelType);
@@ -189,7 +200,7 @@ const MainPage = () => {
                 <div className=''>
                   <button className='absolute right-0 mr-[5%] ' onClick={removeImage}><Image src={close} height={45} width={45}  alt="close-icon" /></button>
                 </div>
-                <Image src={urlFile} height={400} width={400}  className='px-6' alt="Preview" />
+                <Image src={urlFile} height={300} width={400} style={{objectFit: "contain"}}  className='px-6' alt="Preview" />
                 <button className='bg-my-orange w-[80%] p-3 mt-6 text-2xl font-mid text-whites' id="upload-button">SEND</button>
               </div>
             ) :
