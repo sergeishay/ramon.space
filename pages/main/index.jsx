@@ -74,6 +74,7 @@ const MainPage = () => {
         const payload = {
           name: user.name,
           image: { name: file.name, data: e.target.result },
+          model: ModelType,
         };
         const lambdaParams = {
           FunctionName: "uploadImages",
@@ -168,7 +169,7 @@ const MainPage = () => {
                   type="file"
                   accept="image/*"
                   capture="environment"
-                  onChange={handleImageChange}
+                  onChange={(event) => handleImageChange('cloudDetection', event)}
                   style={{ display: 'none' }}
                 />
                 <label htmlFor="cloudDetection">
