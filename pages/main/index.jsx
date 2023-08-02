@@ -4,8 +4,6 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
 import { close, cloudIcon, previewImg, SegmentationImg, CloudImg, segIcon } from '../../public/images';
-
-
 import Link from 'next/link'
 import AWS from "aws-sdk";
 AWS.config.region = "eu-central-1";
@@ -14,8 +12,6 @@ AWS.config.credentials = new AWS.Credentials(
   process.env.AWS_SECRET_ACCESS_KEY
 );
 
-
-
 const MainPage = () => {
   const { user, error, isLoading } = useUser();
   const [ModelType, setModelType] = useState("");
@@ -23,7 +19,7 @@ const MainPage = () => {
   const [urlFile, setUrlFile] = useState("");
   const [imageSrc, setImageSrc] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
-
+  const [utcTime , setUtcTime] = useState("");
 
   const router = useRouter();
   useEffect(() => {
@@ -40,22 +36,19 @@ const MainPage = () => {
     return () => clearTimeout(timer);
   }, []);
 
-
-
-
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
-
   const handleImageChange = (type, event) => {
-
-
     setModelType(type);
     const file = event.target.files[0];
     const urlFormat = URL.createObjectURL(file);
     setFiles(file);
     setUrlFile(urlFormat);
     toast.success("Image Uploaded");
+    const lastModified = new Date(file.lastModified);
+    const lastModifiedUTC = lastModified.toUTCString();
+    setUtcTime(lastModifiedUTC);
 
     if (file) {
       const reader = new FileReader();
@@ -67,10 +60,8 @@ const MainPage = () => {
   };
 
   // handleImageInputChange function
-
   async function handleImageInputChange() {
     const file = files;
-
     if (file) {
       const maxImageSizeBytes = 20 * 1024 * 1024;
       if (file.size > maxImageSizeBytes) {
@@ -79,7 +70,6 @@ const MainPage = () => {
         );
         return;
       }
-
       const reader = new FileReader();
       reader.onload = async (e) => {
         const lambda = new AWS.Lambda();
@@ -88,6 +78,7 @@ const MainPage = () => {
           name: user.name,
           image: { name: file.name, data: e.target.result },
           model: ModelType,
+          utcTime: utcTime,
         };
         const lambdaParams = {
           FunctionName: "uploadImages",
@@ -113,11 +104,9 @@ const MainPage = () => {
       reader.readAsDataURL(file);
     }
   }
-
   function displayUploadMessage(message) {
     toast.success(message);
   }
-
   function displaySuccessMessage(message) {
     toast.success(message);
     setFiles(null);
@@ -127,7 +116,6 @@ const MainPage = () => {
   function displayErrorMessage(message) {
     toast.error(message);
   }
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
     handleImageInputChange(files);
@@ -139,17 +127,12 @@ const MainPage = () => {
 
   };
 
-
-
-  console.log(ModelType);
-
-
   return (
     <div className="flex flex-col justify-between align-center h-[80vh] w-full text-whites text-center">
       {showPopup && (
         <div className="fixed top-0 left-0 w-screen h-screen z-50 flex justify-center items-center bg-black bg-opacity-50">
           <div className="bg-white p-8 rounded-md">
-            <h3 className="text-black font-primary" >Please take a photo in horizontal position.</h3>
+            <h3 className="text-black font-primary" >"Please upload a landscape (▭) image"</h3>
             <button className='bg-my-orange w-[80%] p-2 mt-3 text-xl' onClick={() => setShowPopup(false)}>OK</button>
           </div>
         </div>
@@ -163,21 +146,15 @@ const MainPage = () => {
         <p className="text-white font-tertiary text-4xl pt-1">
           {" "}
           {files ? "Ai Model" : "Choose AI Model"}
-
         </p>
       </div>
-
-      <div className="container flex flex-col">
+      <div className=" flex flex-col w-full m-0 p-0">
         <form onSubmit={handleFormSubmit}>
           {!files && (
-            <div className="form-group flex flex-row justify-around items-start">
-
-              <div className="segment">
-                <button onClick={() => {
-                  document.getElementById('segmentation').click();
-
-                }}>
-                  <Image src={SegmentationImg} height={150} width={150} alt="Segmentation" />
+            <div className="form-group flex flex-row justify-around items-start w-full m-0 p-0">
+              <div className="segment p-3">
+                <button onClick={() => {document.getElementById('segmentation').click();}}>
+                  <Image src={CloudImg} height={150} width={150} alt="Segmentation" />
                   Segmentation
                 </button>
                 <input
@@ -190,13 +167,9 @@ const MainPage = () => {
                   style={{ display: 'none' }}
                 />
               </div>
-
-
-              <div className="cloudDetection">
-                <button onClick={() => {
-                  document.getElementById('cloudDetection').click();
-                }}>
-                  <Image src={CloudImg} height={150} width={150} alt="Cloud Detection" />
+              <div className="cloudDetection p-3">
+                <button onClick={() => {document.getElementById('cloudDetection').click();}}>
+                  <Image src={SegmentationImg} height={150} width={150} alt="Cloud Detection" />
                   Cloud Detection
                 </button>
                 <input
@@ -211,32 +184,27 @@ const MainPage = () => {
               </div>
             </div>
           )}
-          <div className='img-prev flex justify-center items-center'>
+          <div className='img-prev flex justify-center items-center w-full'>
             {imageSrc ? (
-              <div className="static flex justify-center items-center flex-col" >
+              <div className="static flex justify-center items-center flex-col " >
                 <div className='flex flex-row justify-center items-center mb-7'>
-                  <Image src={ModelType === 'cloudDetection' ? segIcon :cloudIcon } className="mx-1" height={50} width={50} alt="segIcon" />
-                  <h3 className="text-white font-tertiary text-4xl mx-2 " >{ModelType}</h3>
+                  <Image src={ModelType === 'cloudDetection' ? segIcon : cloudIcon} className="mx-1" height={50} width={50} alt="segIcon" />
+                  <h3 className="text-white font-tertiary text-3xl mx-2 " >{ModelType === 'cloudDetection' ? "Cloud Detection" : "Segmentation"}</h3>
                 </div>
-                <div className=''>
-                  <button className='absolute right-0 mr-[5%] ' onClick={removeImage}><Image src={close} height={45} width={45} alt="close-icon" /></button>
+                <div className='relative'>
+                  <button className='absolute right-0  mr-[-10px] mt-[-10px]' onClick={removeImage}><Image src={close} height={35} width={35} alt="close-icon" /></button>
+                  <Image src={urlFile} height={350} width={400} style={{ objectFit: "contain" }} className=' image-prev' alt="Preview" />
                 </div>
 
-                <Image src={urlFile} height={300} width={400} sizes="(max-width: 458px) 20vh"  style={{ objectFit: "contain" }} className='px-6' alt="Preview" />
-                <button className='bg-my-orange w-[80%] p-3 mt-6 text-2xl font-mid text-whites' id="upload-button">SEND</button>
+                <button className='bg-my-orange w-[80%] p-2 mt-6 text-2xl font-mid text-whites' id="upload-button">SEND</button>
               </div>
             ) :
-              <Image src={previewImg} className="p-7" height={400} width={400} alt="Preview-before" />
+              <Image src={previewImg} className="p-7 image-prevs" height={400} width={400} alt="Preview-before" />
             }
           </div>
         </form>
       </div>
-
-
-
-
       <div>
-
         <Link href="/api/auth/logout">Logout</Link>
       </div>
     </div>
