@@ -1,7 +1,6 @@
 import '@/styles/globals.css'
 import {UserProvider} from '@auth0/nextjs-auth0/client';
 import ToasterContext from "@/context/TosterContext";
-import { Html, Head, Main, NextScript } from "next/document";
 
 
 
