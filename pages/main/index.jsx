@@ -39,25 +39,75 @@ const MainPage = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
+  // const handleImageChange = (type, event) => {
+  //   setModelType(type);
+  //   const file = event.target.files[0];
+  //   const urlFormat = URL.createObjectURL(file);
+  //   setFiles(file);
+  //   setUrlFile(urlFormat);
+  //   toast.success("Image Uploaded");
+  //   const lastModified = new Date(file.lastModified);
+  //   const lastModifiedUTC = lastModified.toUTCString();
+  //   setUtcTime(lastModifiedUTC);
+
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => {
+  //       setImageSrc(e.target.result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
   const handleImageChange = (type, event) => {
     setModelType(type);
     const file = event.target.files[0];
-    const urlFormat = URL.createObjectURL(file);
-    setFiles(file);
-    setUrlFile(urlFormat);
-    toast.success("Image Uploaded");
-    const lastModified = new Date(file.lastModified);
-    const lastModifiedUTC = lastModified.toUTCString();
-    setUtcTime(lastModifiedUTC);
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImageSrc(e.target.result);
+    const reader = new FileReader();
+  
+    reader.onload = (e) => {
+      const img = new window.Image();
+      img.src = e.target.result;
+  
+      img.onload = () => {
+        // Check if either dimension is smaller than 512px
+        if (img.width < 512 || img.height < 512) {
+          toast.error("The image is too small, pick another one");
+          return;
+        }
+  
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+  
+        // Calculate the scaling factor based on the maximum dimension
+        const maxDimension = Math.min(2000, Math.max(img.width, img.height));
+        const scaleFactor = maxDimension / Math.max(img.width, img.height);
+        canvas.width = Math.max(512, img.width * scaleFactor);
+        canvas.height = Math.max(512, img.height * scaleFactor);
+  
+        // Draw the resized image onto the canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        console.log(canvas.width, canvas.height);
+        // Get the data URL with JPEG compression
+        const newDataUrl = canvas.toDataURL("image/jpeg", 0.8);
+        
+        // Convert data URL to Blob and set state
+        fetch(newDataUrl)
+          .then((res) => res.blob())
+          .then((blob) => {
+            const newFile = new File([blob], file.name, { type: "image/jpeg" });
+            const urlFormat = URL.createObjectURL(newFile);
+            setFiles(newFile);
+            setUrlFile(urlFormat);
+            setImageSrc(newDataUrl);
+            console.log(newFile, urlFormat, newDataUrl);
+            toast.success("Image Uploaded");
+          });
       };
-      reader.readAsDataURL(file);
-    }
+    };
+  
+    reader.readAsDataURL(file);
   };
+  
+
 
   // handleImageInputChange function
   async function handleImageInputChange() {
@@ -84,7 +134,7 @@ const MainPage = () => {
           FunctionName: "uploadImages",
           InvocationType: "RequestResponse",
           Payload: JSON.stringify(payload),
-          Qualifier: "4",
+          Qualifier: "5",
         };
         try {
           const lambdaResponse = await lambda.invoke(lambdaParams).promise();
@@ -202,7 +252,7 @@ const MainPage = () => {
           </div>
         </form>
       </div>
-      <div class='pb-5' >
+      <div className='pb-2' >
         <Link href="/api/auth/logout">Logout</Link>
       </div>
     </div>
