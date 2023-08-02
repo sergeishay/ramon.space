@@ -162,7 +162,6 @@ const MainPage = () => {
                   className="input-to-hidden"
                   type="file"
                   accept="image/*"
-                  capture="environment"
                   onChange={(event) => handleImageChange('Segmentation', event)}
                   style={{ display: 'none' }}
                 />
@@ -177,7 +176,6 @@ const MainPage = () => {
                   className="input-to-hidden"
                   type="file"
                   accept="image/*"
-                  capture="environment"
                   onChange={(event) => handleImageChange('cloudDetection', event)}
                   style={{ display: 'none' }}
                 />
