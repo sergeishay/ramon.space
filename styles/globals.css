@@ -59,7 +59,7 @@
     max-height: fit-content;
 }
 .footer-logo{
-    width: 100%;
+    width: 250px;
     height: 100%;
     object-fit: cover !important;
 
