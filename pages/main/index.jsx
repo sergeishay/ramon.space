@@ -178,7 +178,7 @@ const MainPage = () => {
         </div>
       )}
       <div className="headings flex flex-col justify-center align-center text-center">
-        <p className='text-white font-medItalic text-4xl pt-5' > AI at terrestrial speeds</p>
+        <p className='text-white font-medItalic text-3xl pt-5 text-center' > AI at terrestrial speeds</p>
         <p className="text-white font-primary text-2xl pt-5"> {user?.name}</p>
         <p className="text-white font-tertiary text-4xl pt-1">
           {" "}
@@ -230,7 +230,7 @@ const MainPage = () => {
                   <Image src={ModelType === 'cloudDetection' ? segIcon : cloudIcon} className="mx-1" height={50} width={50} alt="segIcon" />
                   <h3 className="text-white font-tertiary text-3xl mx-2 " >{ModelType === 'cloudDetection' ? "Cloud Detection" : "Segmentation"}</h3>
                 </div>
-                <div className='relative mx-20'>
+                <div className='relative mx-[100px]'>
                   <button className='absolute right-0  mr-[-10px] mt-[-10px]' onClick={removeImage}><Image src={close} height={35} width={35} alt="close-icon" /></button>
                   <Image src={urlFile} height={350} width={400} style={{ objectFit: "contain" }} className=' image-prev' alt="Preview" />
                 </div>
