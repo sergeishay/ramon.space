@@ -178,10 +178,7 @@ const MainPage = () => {
         </div>
       )}
       <div className="headings flex flex-col justify-center align-center text-center">
-        <p className="text-white font-italic text-2xl pt-5">
-          {" "}
-          AI at terrestial speeds
-        </p>
+        <p className='text-white font-medItalic text-4xl pt-5' > AI at terrestrial speeds</p>
         <p className="text-white font-primary text-2xl pt-5"> {user?.name}</p>
         <p className="text-white font-tertiary text-4xl pt-1">
           {" "}
@@ -192,24 +189,11 @@ const MainPage = () => {
         <form onSubmit={handleFormSubmit}>
           {!files && (
             <div className="form-group flex flex-row justify-around items-start w-full m-0 p-0">
-              <div className="segment p-3">
-                <button onClick={() => { document.getElementById('segmentation').click(); }}>
-                  <Image src={CloudImg} height={150} width={150} alt="Segmentation" />
-                  Segmentation
-                </button>
-                <input
-                  id="segmentation"
-                  className="input-to-hidden"
-                  type="file"
-                  accept="image/*"
-                  onChange={(event) => handleImageChange('Segmentation', event)}
-                  style={{ display: 'none' }}
-                />
-              </div>
               <div className="cloudDetection p-3">
                 <button onClick={() => { document.getElementById('cloudDetection').click(); }}>
                   <Image src={SegmentationImg} height={150} width={150} alt="Cloud Detection" />
-                  Cloud Detection
+                  <p className="text-white font-primary text-xl "> Cloud Detection</p>
+
                 </button>
                 <input
                   id="cloudDetection"
@@ -220,6 +204,23 @@ const MainPage = () => {
                   style={{ display: 'none' }}
                 />
               </div>
+              <div className="segment p-3">
+                <button onClick={() => { document.getElementById('segmentation').click(); }}>
+                  <Image src={CloudImg} height={150} width={150} alt="Segmentation" />
+                  <p className="text-white font-primary text-xl ">Segmentation</p>
+
+                  
+                </button>
+                <input
+                  id="segmentation"
+                  className="input-to-hidden"
+                  type="file"
+                  accept="image/*"
+                  onChange={(event) => handleImageChange('Segmentation', event)}
+                  style={{ display: 'none' }}
+                />
+              </div>
+
             </div>
           )}
           <div className='img-prev flex justify-center items-center w-full'>
@@ -230,7 +231,7 @@ const MainPage = () => {
                   <h3 className="text-white font-tertiary text-3xl mx-2 " >{ModelType === 'cloudDetection' ? "Cloud Detection" : "Segmentation"}</h3>
                 </div>
                 <div className='relative'>
-                  <button className='absolute right-[20%]  mr-[-10px] mt-[-10px]' onClick={removeImage}><Image src={close} height={35} width={35} alt="close-icon" /></button>
+                  <button className='absolute right-0  mr-[-10px] mt-[-10px]' onClick={removeImage}><Image src={close} height={35} width={35} alt="close-icon" /></button>
                   <Image src={urlFile} height={350} width={400} style={{ objectFit: "contain" }} className=' image-prev' alt="Preview" />
                 </div>
 
