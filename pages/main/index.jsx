@@ -168,7 +168,7 @@ const MainPage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-between align-center h-[80vh] w-full text-whites text-center">
+    <div className="flex flex-col justify-between align-center h-[100%] w-full text-whites text-center">
       {showPopup && (
         <div className="fixed top-0 left-0 w-screen h-screen z-50 flex justify-center items-center bg-black bg-opacity-50">
           <div className="bg-white p-8 rounded-md">
@@ -209,7 +209,7 @@ const MainPage = () => {
                   <Image src={CloudImg} height={150} width={150} alt="Segmentation" />
                   <p className="text-white font-primary text-xl ">Segmentation</p>
 
-                  
+
                 </button>
                 <input
                   id="segmentation"
@@ -230,12 +230,12 @@ const MainPage = () => {
                   <Image src={ModelType === 'cloudDetection' ? segIcon : cloudIcon} className="mx-1" height={50} width={50} alt="segIcon" />
                   <h3 className="text-white font-tertiary text-3xl mx-2 " >{ModelType === 'cloudDetection' ? "Cloud Detection" : "Segmentation"}</h3>
                 </div>
-                <div className='relative'>
+                <div className='relative mx-20'>
                   <button className='absolute right-0  mr-[-10px] mt-[-10px]' onClick={removeImage}><Image src={close} height={35} width={35} alt="close-icon" /></button>
                   <Image src={urlFile} height={350} width={400} style={{ objectFit: "contain" }} className=' image-prev' alt="Preview" />
                 </div>
+                  <button className='bg-my-orange w-[80%] p-2 mt-6 text-2xl font-mid text-whites' id="upload-button">SEND</button>
 
-                <button className='bg-my-orange w-[80%] p-2 mt-6 text-2xl font-mid text-whites' id="upload-button">SEND</button>
               </div>
             ) :
               <Image src={previewImg} className="p-7 image-prevs" height={400} width={400} alt="Preview-before" />

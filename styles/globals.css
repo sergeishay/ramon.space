@@ -52,12 +52,12 @@
     position: absolute;
     left: 80%;
 }
-.image-prev{
+/* .image-prev{
     width:100%;
     height: 20vh !important;
     max-width: 350px;
     max-height: fit-content;
-}
+} */
 .footer-logo{
     width: 250px;
     height: 100%;
