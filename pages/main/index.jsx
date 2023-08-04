@@ -121,7 +121,7 @@ const MainPage = () => {
           FunctionName: "uploadImages",
           InvocationType: "RequestResponse",
           Payload: JSON.stringify(payload),
-          Qualifier: "13",
+          Qualifier: "14",
         };
         try {
           const lambdaResponse = await lambda.invoke(lambdaParams).promise();
