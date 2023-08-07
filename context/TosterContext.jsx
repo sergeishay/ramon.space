@@ -1,10 +1,10 @@
 
-import { Toaster } from 'react-hot-toast'
+import { Toaster, toastOptions  } from 'react-hot-toast'
 
 const ToasterContext = () => {
     return (
         <div>
-            <Toaster />
+            <Toaster toastOptions={{duration: 4000}} />
         </div>
     )
 }

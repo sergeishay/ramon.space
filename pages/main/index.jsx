@@ -20,7 +20,7 @@ const MainPage = () => {
   const [imageSrc, setImageSrc] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [utcTime, setUtcTime] = useState("");
-
+  const [isUploading, setIsUploading] = useState(false);
   const router = useRouter();
   useEffect(() => {
     if (!user) {
@@ -84,7 +84,6 @@ const MainPage = () => {
             setUrlFile(urlFormat);
             setImageSrc(newDataUrl);
 
-            toast.success("Image Uploaded");
           });
       };
     };
@@ -113,9 +112,7 @@ const MainPage = () => {
           model: ModelType,
           utcTime: utcTime,
         };
-        // console.log(payload);
-        // console.log(typeof payload)
-        // console.log(JSON.stringify(payload))
+
 
         const lambdaParams = {
           FunctionName: "uploadImages",
@@ -137,7 +134,7 @@ const MainPage = () => {
             "Error uploading image - please ask for support."
           );
         } finally {
-          console.log("finally");
+          setIsUploading(false);
         }
       };
 
@@ -157,6 +154,7 @@ const MainPage = () => {
     toast.error(message);
   }
   const handleFormSubmit = (e) => {
+    setIsUploading(true);
     e.preventDefault();
     handleImageInputChange(files);
   };
@@ -168,7 +166,7 @@ const MainPage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-between align-center h-[100vh] w-full text-whites text-center">
+    <div className="flex flex-col justify-start align-center h-[100vh] w-full text-whites text-center">
       {showPopup && (
         <div className="fixed top-0 left-0 w-screen h-screen z-50 flex justify-center items-center bg-black bg-opacity-50">
           <div className="bg-white p-8 rounded-md">
@@ -234,8 +232,12 @@ const MainPage = () => {
                   <button className='absolute right-0  mr-[-10px] mt-[-10px]' onClick={removeImage}><Image src={close} height={35} width={35} alt="close-icon" /></button>
                   <Image src={urlFile} height={350} width={400} style={{ objectFit: "contain" }} className=' image-prev' alt="Preview" />
                 </div>
-                  <button className='bg-my-orange w-[80%] p-2 mt-6 text-2xl font-mid text-whites' id="upload-button">SEND</button>
-
+                {/* <button className='bg-my-orange w-[80%] p-2 mt-6 text-2xl font-mid text-whites' id="upload-button">SEND</button> */}
+                <button
+                  className={`bg-my-orange w-[80%] p-2 mt-6 text-2xl font-mid text-whites ${!isUploading ? 'bg-gray-400 cursor-not-allowed' : ''}`}
+                  id="upload-button"
+                  disabled={!isUploading}
+                >SEND</button>
               </div>
             ) :
               <Image src={previewImg} className="p-7 image-prevs" height={400} width={400} alt="Preview-before" />
