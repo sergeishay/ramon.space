@@ -134,7 +134,7 @@ const MainPage = () => {
             "Error uploading image - please ask for support."
           );
         } finally {
-          setIsUploading(false);
+          // setIsUploading(false);
         }
       };
 
@@ -182,6 +182,8 @@ const MainPage = () => {
           {" "}
           {files ? "Ai Model" : "Choose AI Model"}
         </p>
+        <Link href="https://forms.gle/683PaKhHAtYG29KNA" target="_blank" className="underline-offset-2 " ><p className="my-tag underline-offset-2 font-secondary text-xl text-blue-400">Register to raffle!</p></Link>
+
       </div>
       <div className=" flex flex-col w-full m-0 p-0">
         <form onSubmit={handleFormSubmit}>

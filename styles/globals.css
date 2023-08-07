@@ -64,3 +64,6 @@
     object-fit: cover !important;
 
 }
+.my-tag{
+    text-decoration: underline;
+}
